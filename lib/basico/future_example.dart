@@ -1,25 +1,25 @@
-import 'package:asincrono/services.dart';
+import 'package:asincrono/basico/services.dart';
 import 'package:flutter/material.dart';
 
-class StreamExample extends StatelessWidget {
+class FutureExample extends StatelessWidget {
   final AsyncServices _services = AsyncServices();
 
-  StreamExample({super.key});
+  FutureExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Ejemplo Stream')),
+      appBar: AppBar(title: Text('Ejemplo Future')),
       body: Center(
-        child: StreamBuilder<int>(
-          stream: _services.counterStream(),
+        child: FutureBuilder<String>(
+          future: _services.fetchData(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              return Text('Contador: ${snapshot.data}', style: TextStyle(fontSize: 24));
+              return Text(snapshot.data ?? 'Sin datos');
             }
           },
         ),

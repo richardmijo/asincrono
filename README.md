@@ -76,8 +76,8 @@ lib/ ├── main.dart # Archivo principal ├── services.dart # Servicios
 
 ### 2. **Clona el Repositorio**
 ```bash
-git clone https://github.com/tu-usuario/asincrono-ejemplos.git
-cd asincrono-ejemplos
+git clone https://github.com/richardmijo/asincrono.git
+cd asincrono
 
  Instala las Dependencias
 
