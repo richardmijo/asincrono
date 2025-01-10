@@ -15,33 +15,37 @@ class WebServiceAPI {
   }
 
   // Crear una nueva publicación
-  Future<void> createPost(String title, String body) async {
+  Future<Map<String, dynamic>> createPost(String title, String body) async {
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'title': title,
         'body': body,
-        'userId': 1, // ID de usuario simulado
+        'userId': 1,
       }),
     );
-    if (response.statusCode != 201) {
+    if (response.statusCode == 201) {
+      return json.decode(response.body);
+    } else {
       throw Exception('Error al crear la publicación');
     }
   }
 
-  // Actualizar una publicación existente
-  Future<void> updatePost(int id, String title, String body) async {
+  // Actualizar una publicación
+  Future<Map<String, dynamic>> updatePost(int id, String title, String body) async {
     final response = await http.put(
       Uri.parse('$apiUrl/$id'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'title': title,
         'body': body,
-        'userId': 1, // ID de usuario simulado
+        'userId': 1,
       }),
     );
-    if (response.statusCode != 200) {
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
       throw Exception('Error al actualizar la publicación');
     }
   }

@@ -1,3 +1,4 @@
+import 'package:asincrono/base_datos/sqlite_crud.dart';
 import 'package:asincrono/servicios/web_service_crud.dart';
 import 'package:flutter/material.dart';
 import 'package:asincrono/basico/api_simulation.dart';
@@ -172,17 +173,7 @@ class SQLiteManagementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Gestión de SQLite\n(Contenido por implementar)',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Color(0xFF7A003C), // Granate
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
+    return SQLiteCrudScreen(); // Muestra la pantalla CRUD para SQLite
   }
 }
 

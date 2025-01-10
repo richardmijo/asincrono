@@ -1,58 +1,49 @@
-import 'package:asincrono/servicios/web_service_api.dart';
+import 'package:asincrono/base_datos/database_helper.dart';
 import 'package:flutter/material.dart';
 
 
-class WebServiceCrudScreen extends StatefulWidget {
+class SQLiteCrudScreen extends StatefulWidget {
   @override
-  _WebServiceCrudScreenState createState() => _WebServiceCrudScreenState();
+  _SQLiteCrudScreenState createState() => _SQLiteCrudScreenState();
 }
 
-class _WebServiceCrudScreenState extends State<WebServiceCrudScreen> {
-  final WebServiceAPI _api = WebServiceAPI(); // Instancia del servicio
-  List<Map<String, dynamic>> _posts = []; // Lista de publicaciones locales
+class _SQLiteCrudScreenState extends State<SQLiteCrudScreen> {
+  final DatabaseHelper _dbHelper = DatabaseHelper();
+  List<Map<String, dynamic>> _posts = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchPosts(); // Cargar las publicaciones al inicio
+    _fetchPosts();
   }
 
-  // Método para obtener todas las publicaciones desde el API
+  // Obtener todos los registros
   Future<void> _fetchPosts() async {
-    final posts = await _api.fetchPosts();
+    final posts = await _dbHelper.getPosts();
     setState(() {
-      _posts = posts.map((post) => Map<String, dynamic>.from(post)).toList();
+      _posts = posts;
     });
   }
 
-  // Método para crear una nueva publicación
+  // Insertar un nuevo registro
   Future<void> _addPost(String title, String body) async {
-    final newPost = await _api.createPost(title, body);
-    setState(() {
-      _posts.add(newPost); // Agregar la publicación a la lista local
-    });
+    await _dbHelper.insertPost({'title': title, 'body': body});
+    _fetchPosts();
   }
 
-  // Método para actualizar una publicación existente
+  // Actualizar un registro existente
   Future<void> _updatePost(int id, String title, String body) async {
-    final updatedPost = await _api.updatePost(id, title, body);
-    setState(() {
-      final index = _posts.indexWhere((post) => post['id'] == id);
-      if (index != -1) {
-        _posts[index] = updatedPost; // Actualizar en la lista local
-      }
-    });
+    await _dbHelper.updatePost(id, {'title': title, 'body': body});
+    _fetchPosts();
   }
 
-  // Método para eliminar una publicación
+  // Eliminar un registro
   Future<void> _deletePost(int id) async {
-    await _api.deletePost(id);
-    setState(() {
-      _posts.removeWhere((post) => post['id'] == id); // Eliminar de la lista local
-    });
+    await _dbHelper.deletePost(id);
+    _fetchPosts();
   }
 
-  // Mostrar el formulario para agregar/actualizar publicaciones
+  // Mostrar el formulario para agregar/actualizar registros
   void _showPostForm({int? id, String? initialTitle, String? initialBody}) {
     final titleController = TextEditingController(text: initialTitle ?? '');
     final bodyController = TextEditingController(text: initialBody ?? '');
@@ -61,7 +52,7 @@ class _WebServiceCrudScreenState extends State<WebServiceCrudScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(id == null ? 'Nueva Publicación' : 'Actualizar Publicación'),
+          title: Text(id == null ? 'Nuevo Registro' : 'Actualizar Registro'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -89,7 +80,7 @@ class _WebServiceCrudScreenState extends State<WebServiceCrudScreen> {
                 }
                 Navigator.pop(context);
               },
-              child: Text(id == null ? 'Crear' : 'Actualizar'),
+              child: Text(id == null ? 'Agregar' : 'Actualizar'),
             ),
           ],
         );
@@ -101,7 +92,7 @@ class _WebServiceCrudScreenState extends State<WebServiceCrudScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CRUD Servicios Web'),
+        title: Text('CRUD con SQLite'),
       ),
       body: ListView.builder(
         itemCount: _posts.length,
