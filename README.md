@@ -62,3 +62,28 @@ El diseño de la aplicación utiliza los colores institucionales de la **UIDE**:
 
 ## 🛠️ **Estructura del Proyecto**
 
+lib/ ├── main.dart # Archivo principal ├── services.dart # Servicios asíncronos ├── future_example.dart # Ejemplo Future ├── stream_example.dart # Ejemplo Stream ├── api_simulation.dart # Ejemplo API Simulada ├── download_example.dart # Ejemplo Descarga
+
+
+---
+
+## 🧑‍💻 **Cómo Usar el Proyecto**
+
+### 1. **Requisitos Previos**
+- Flutter 3.27.0 o superior
+- Dart 3.6.0
+- Un editor de texto como VS Code o Android Studio
+
+### 2. **Clona el Repositorio**
+```bash
+git clone https://github.com/tu-usuario/asincrono-ejemplos.git
+cd asincrono-ejemplos
+
+ Instala las Dependencias
+
+ flutter pub get
+
+
+Ejecuta la Aplicación
+
+flutter run
