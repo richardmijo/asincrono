@@ -113,7 +113,7 @@ class AsynchronousExamplesScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF7A003C), // Granate
+                color: Color(0xFF7A0032), // Granate
               ),
               textAlign: TextAlign.center,
             ),
@@ -177,32 +177,45 @@ class SQLiteManagementScreen extends StatelessWidget {
   }
 }
 
-// Botón reutilizable para el menú de opciones
+// Clase personalizada que define un botón reutilizable con un ícono y texto.
 class MenuButton extends StatelessWidget {
-  final String title; // Título del botón
-  final IconData icon; // Icono del botón
-  final VoidCallback onTap; // Acción al presionar el botón
+  final String title;
+  final IconData icon;
 
+  // Acción que se ejecutará al presionar el botón.
+  // VoidCallback es un tipo de función que no recibe parámetros ni devuelve valores.
+  final VoidCallback onTap;
+
+  // Constructor de la clase MenuButton.
+  // Los parámetros `title`, `icon`, y `onTap` son obligatorios (`required`).
   const MenuButton({
-    super.key,
-    required this.title,
-    required this.icon,
-    required this.onTap,
+    super.key, // Clave única para identificar el widget en el árbol de widgets.
+    required this.title, // Asigna el título proporcionado al botón.
+    required this.icon, // Asigna el ícono proporcionado al botón.
+    required this.onTap, // Asigna la acción proporcionada al botón.
   });
 
   @override
   Widget build(BuildContext context) {
+    // Método que construye la interfaz gráfica del botón.
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: ElevatedButton.icon(
-        icon: Icon(icon, size: 20, color: Colors.white), // Icono del botón
-        label: Text(title), // Texto del botón
-        onPressed: onTap, // Acción al presionar
+        icon: Icon(
+          icon, // Usa el ícono especificado en la propiedad `icon`.
+          size: 20, // Tamaño del ícono en píxeles.
+          color: Colors.white, // Color del ícono (blanco en este caso).
+        ),
+        label: Text(
+          title, // Usa el texto especificado en la propiedad `title`.
+        ),
+        onPressed: onTap, // Asigna la acción definida en `onTap` al presionar el botón.
         style: ElevatedButton.styleFrom(
-          minimumSize: Size(double.infinity, 50), // Botón ancho
-          textStyle: TextStyle(fontWeight: FontWeight.bold),
-          backgroundColor: Color(0xFF7A003C), // Granate
-          shadowColor: Color(0xFFFFD700), // Sombra amarilla
+          // Propiedades de estilo personalizadas para el botón.
+          minimumSize: Size(double.infinity, 50), // El botón ocupará todo el ancho disponible.
+          textStyle: TextStyle(fontWeight: FontWeight.bold), // Texto con fuente en negrita.
+          backgroundColor: Color(0xFF7A003C), // Color de fondo del botón (granate).
+          shadowColor: Color(0xFFFFD700), // Color de la sombra del botón (amarillo dorado).
         ),
       ),
     );
